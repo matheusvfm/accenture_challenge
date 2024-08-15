@@ -27,3 +27,15 @@
 Cypress.Commands.add('getDataTest', (dataTestSelector) => {
     return cy.get(`[id="${dataTestSelector}"]`)
 })
+
+Cypress.Commands.add('getRandomElement', (array) => {
+    const randomIndex = Math.floor(Math.random() * array.length);
+    return array[randomIndex];
+})
+
+Cypress.Commands.add('arrayValidator', (dataTest, options) => {
+    return cy.get(`[id="${dataTest}"]`).find('option').each(($el, index) => {
+        const optionText = $el.text()
+        expect(optionText).to.equal(options[index])
+    })
+})

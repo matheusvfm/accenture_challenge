@@ -37,8 +37,6 @@ describe('Send quote', () => {
       cy.get('#numberofseats').select("4")
       cy.get('#fuel').select("Diesel")
       cy.get('#payload').type("500")
-
     })
-
     //I should navigate trough each step after fill them, to check if I all changes are keeping saved
 })

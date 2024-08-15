@@ -4,8 +4,6 @@ describe('Vehicle data', () => {
   })
 
   it('Nav bar: first step to get a quote', () => {
-    //bad path
-    cy.getDataTest('entervehicledata').contains(/Enter Vehicle Data/i)
     cy.get('label.main').contains('Make').should('be.visible')
     cy.get('label.main').contains('Model').should('be.visible')
     cy.get('label.main').contains('Cylinder Capacity [ccm]').should('be.visible')
@@ -20,6 +18,7 @@ describe('Vehicle data', () => {
     cy.get('label.main').contains('List Price [$]').should('be.visible')
     cy.get('label.main').contains('License Plate Number').should('be.visible')
     cy.get('label.main').contains('Annual Mileage [mi]').should('be.visible')
+    cy.getDataTest('entervehicledata').contains(/Enter Vehicle Data/i)
     cy.getDataTest('entervehicledata').should('contain.text', 'Enter Vehicle Data')
     cy.getDataTest('entervehicledata').should('be.visible')
     cy.getDataTest('entervehicledata').should('not.be.disabled')
@@ -49,7 +48,7 @@ describe('Vehicle data', () => {
     const randomOption = cy.getRandomElement(options)
     //good path
     cy.get('#make').select("Volvo")//I would like to use the random option here, but I couldn't figure it out
-    cy.get('#make').should('have.value', "Volvo");
+    cy.get('#make').should('have.value', "Volvo")
     cy.get('#make').should('have.css', 'background-color', 'rgb(240, 246, 253)')
     //bad path
     cy.get('#make').select("– please select –")
@@ -93,6 +92,7 @@ describe('Vehicle data', () => {
     //bad path
     cy.get('#cylindercapacity').type("Scooter")
     cy.get('#cylindercapacity').should('have.css', 'background-color', 'rgb(254, 236, 235)')
+    cy.get('span.error').contains('Must be a number between 1 and 2000').and('be.visible')
     cy.get('#cylindercapacity').clear()
     cy.get('#cylindercapacity').type("2001")
     cy.get('#cylindercapacity').should('have.css', 'background-color', 'rgb(254, 236, 235)')
@@ -214,7 +214,7 @@ describe('Vehicle data', () => {
     cy.get('#fuel').should('have.css', 'background-color', 'rgb(240, 246, 253)')
     //Missing: validation of the check mark icon
   })
-  it.only('Validating Payload field', () => {
+  it('Validating Payload field', () => {
     cy.get('span.error').contains('This field is mandatory').and('not.be.visible')
     cy.get('#payload').click()
     cy.get('span.error').contains('This field is mandatory')
